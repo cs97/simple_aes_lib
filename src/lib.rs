@@ -94,17 +94,17 @@ mod tests {
         #[cfg(feature = "aes_cbc")]
 	fn enc_cbc__dec_openssl()  -> std::io::Result<()> {
 		
-		let text = "Hakuna Matata".as_bytes().to_vec();
+                let text = "Hakuna Matata".as_bytes().to_vec();
   	   	  
-		let key = convert_key("kekw");
+                let key = convert_key("kekw");
 
-		let ctxt = enc_256_cbc(text.clone(), &key)?;
+                let ctxt = enc_256_cbc(text.clone(), &key)?;
 		
                 let newtext = dec_256_openssl(ctxt, &key)?;
 
                 assert_eq!(text, newtext);
 		
-		return Ok(());
+                return Ok(());
 
 	}
 
@@ -123,7 +123,7 @@ mod tests {
 
                 assert_eq!(text, newtext);
 
-                return Ok(());
+                 return Ok(());
 
         }
 
