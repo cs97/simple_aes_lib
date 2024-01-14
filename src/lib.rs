@@ -44,7 +44,7 @@ use openssl::rand::rand_bytes;
 
 
 #[cfg(feature = "openssl")]
-fn enc256(data: Vec::<u8>, key: &[u8]) -> std::io::Result<Vec<u8>> {
+fn enc_256_openssl(data: Vec::<u8>, key: &[u8]) -> std::io::Result<Vec<u8>> {
 	let mut ranarr = vec![0u8; 16];
 	rand_bytes(&mut ranarr).unwrap();
 	ranarr.extend(data);
@@ -52,7 +52,7 @@ fn enc256(data: Vec::<u8>, key: &[u8]) -> std::io::Result<Vec<u8>> {
 }
 
 #[cfg(feature = "openssl")]
-fn dec256(data: Vec::<u8>, key: &[u8]) -> std::io::Result<Vec<u8>> {
+fn dec_256_openssl(data: Vec::<u8>, key: &[u8]) -> std::io::Result<Vec<u8>> {
 	let newdata = decrypt(Cipher::aes_256_cbc(), key, None, &data)?;
 	return Ok(newdata[16..].to_vec());
 }
@@ -100,7 +100,7 @@ mod tests {
 
 		let ctxt = enc_256_cbc(text.clone(), &key)?;
 		
-                let newtext = dec256(ctxt, &key)?;
+                let newtext = dec_256_openssl(ctxt, &key)?;
 
                 assert_eq!(text, newtext);
 		
@@ -117,7 +117,7 @@ mod tests {
 
                 let key = convert_key("kekw");
 
-                let ctxt = enc256(text.clone(), &key)?;
+                let ctxt = enc_256_openssl(text.clone(), &key)?;
 
                 let newtext = dec_256_cbc(ctxt, &key)?;
 
