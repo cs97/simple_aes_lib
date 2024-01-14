@@ -44,7 +44,7 @@ use openssl::rand::rand_bytes;
 
 
 #[cfg(feature = "openssl")]
-fn enc_256_openssl(data: Vec::<u8>, key: &[u8]) -> std::io::Result<Vec<u8>> {
+fn enc_256_openssl(data: Vec::<u8>, key: &[u8; 32]) -> std::io::Result<Vec<u8>> {
 	let mut ranarr = vec![0u8; 16];
 	rand_bytes(&mut ranarr).unwrap();
 	ranarr.extend(data);
@@ -52,7 +52,7 @@ fn enc_256_openssl(data: Vec::<u8>, key: &[u8]) -> std::io::Result<Vec<u8>> {
 }
 
 #[cfg(feature = "openssl")]
-fn dec_256_openssl(data: Vec::<u8>, key: &[u8]) -> std::io::Result<Vec<u8>> {
+fn dec_256_openssl(data: Vec::<u8>, key: &[u8; 32]) -> std::io::Result<Vec<u8>> {
 	let newdata = decrypt(Cipher::aes_256_cbc(), key, None, &data)?;
 	return Ok(newdata[16..].to_vec());
 }
