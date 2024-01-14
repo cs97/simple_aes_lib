@@ -73,20 +73,20 @@ fn convert_key(key: &str) -> [u8; 32] {
 mod tests {
 	use super::*;
 
-	#[test]
+        #[test]
         #[cfg(feature = "aes_cbc")]
-	fn enc_cbc__dec_cbc() -> std::io::Result<()> {
-		let text = "Hakuna Matata".as_bytes().to_vec();
+        fn enc_cbc__dec_cbc() -> std::io::Result<()> {
+                let text = "Hakuna Matata".as_bytes().to_vec();
 
-		let key = convert_key("kekw");
+                let key = convert_key("kekw");
 
                 let ctxt = enc_256_cbc(text.clone(), &key)?;
 
-		let newtext = dec_256_cbc(ctxt.clone(), &key)?;
+                let newtext = dec_256_cbc(ctxt.clone(), &key)?;
 
                 assert_eq!(text, newtext);
 
-		return Ok(());
+                return Ok(());
 	}
 
 	#[test]
